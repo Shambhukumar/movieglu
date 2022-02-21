@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 import "./App.scss";
-import Axios from "./component/axios";
+import Axios, { keyurl } from "./component/axios";
 import { MovieProvider} from "./component/context/MovieContext";
 import Home from "./component/Home/Home";
 import Movie from "./component/Movie/Movie";
@@ -14,11 +14,12 @@ const App = () => {
     CallApi();
   }, []);
   const CallApi = async () => {
-    const res = await Axios.get("filmsComingSoon")
-    setMovies(res.data.films);
+    const res = await Axios.get(`movie/upcoming?${keyurl}`)
+    setMovies(res.data.results);
   };
   return (
     <div className="App">
+    
       <MovieProvider value={{selectedMovie, setSelectedMovie }}>
         {selectedMovie ? <Movie /> : <Home movie={movies} />}
       </MovieProvider>
